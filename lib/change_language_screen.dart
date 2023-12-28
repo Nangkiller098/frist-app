@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ChangeLangaugeScreenState extends StatefulWidget {
@@ -13,7 +14,7 @@ class _State extends State<ChangeLangaugeScreenState> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan,
-        title: Text("Change_Language".tr()),
+        title: Text("change_language".tr()),
       ),
       body: ListView(
         children: [
@@ -25,17 +26,24 @@ class _State extends State<ChangeLangaugeScreenState> {
                 color: Colors.black.withOpacity(0.05),
                 borderRadius: const BorderRadius.all(Radius.circular(10))),
             child: ListTile(
-              onTap: () {},
+              onTap: () {
+                context.setLocale(const Locale('en', 'US'));
+                if (kDebugMode) {
+                  print(context.locale.toString());
+                }
+              },
               leading: Image.asset(
-                "images/uk.jpg",
+                "assets/lang/uk.jpg",
                 width: 60,
                 height: 50,
               ),
               title: const Text("English"),
-              trailing: const Icon(
-                Icons.check_circle,
-                color: Colors.cyan,
-              ),
+              trailing: context.locale.toString() != "en_US"
+                  ? const Text("")
+                  : const Icon(
+                      Icons.check_circle,
+                      color: Colors.cyan,
+                    ),
             ),
           ),
 
@@ -47,17 +55,24 @@ class _State extends State<ChangeLangaugeScreenState> {
                 color: Colors.black.withOpacity(0.05),
                 borderRadius: const BorderRadius.all(Radius.circular(10))),
             child: ListTile(
-              onTap: () {},
+              onTap: () {
+                context.setLocale(const Locale('km', 'KH'));
+                if (kDebugMode) {
+                  print(context.locale.toString());
+                }
+              },
               leading: Image.asset(
-                "images/khmer.jpg",
+                "assets/lang/kh.jpg",
                 width: 60,
                 height: 50,
               ),
               title: const Text("ខ្មែរ"),
-              trailing: const Icon(
-                Icons.check_circle,
-                color: Colors.cyan,
-              ),
+              trailing: context.locale.toString() == "en_US"
+                  ? const Text("")
+                  : const Icon(
+                      Icons.check_circle,
+                      color: Colors.cyan,
+                    ),
             ),
           )
         ],
